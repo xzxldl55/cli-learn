@@ -1,0 +1,20 @@
+{
+  "name": "prompt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "tsc && node dist/prompts-test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@types/prompts": "^2.4.9",
+    "prompts": "^2.4.2"
+  }
+}
