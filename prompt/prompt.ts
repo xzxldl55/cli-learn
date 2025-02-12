@@ -1,5 +1,6 @@
 import EventEmitter from 'events';
 import readline from 'readline';
+import ansiEscapes from 'ansi-escapes';
 
 export interface Key {
 	name: string;
@@ -16,7 +17,7 @@ export abstract class Prompt extends EventEmitter {
 		super();
 
 		readline.emitKeypressEvents(process.stdin); // 监听键盘事件
-		this.rl = readline.createInterface({ input: process.stdin });
+		this.rl = readline.createInterface({ input: process.stdin }); // 创建 readline 实例
 
 		process.stdin.setRawMode(true); // 禁用内置键盘事件（如 ctrl+c）
 
@@ -31,12 +32,21 @@ export abstract class Prompt extends EventEmitter {
             return process.exit();
         }
 
+		// 处理回车事件
         if (key.name === 'return') {
             return this.close();
         }
+
+		this.onKeyInput(str, key);
     }
 
     close() {
-        
+		// 问题结束后清除所有行
+		process.stdout.write(ansiEscapes.eraseLines(process.stdout.rows));
+		process.stdin.removeListener('keypress', onKeypress); // 移除监听键盘事件
+		process.stdin.setRawMode(false); // 恢复内置键盘事件
+
+		this.rl.close(); // 关闭 readline 实例解除对键盘的监听
+		this.emit('submit', this.value) // 触发 submit 事件
     }
 }

@@ -41,3 +41,7 @@ chalk封装了 ASCII 码的颜色控制字符，使用链式调用来配置前�
 通过对话与提示词，来与用户进行交互，确认数据选择
 
 [可参考通用库 prompts](https://github.com/terkelg/prompts)
+
+[自定义 prompt](./prompt/index.ts)
+
+## 7. Blessed
